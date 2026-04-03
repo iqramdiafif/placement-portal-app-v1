@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mb-4">
+        <div class="container mt-3"> </div>
+            <nav>
+                <a href="/logout" class="btn btn-outline-danger btn-sm float-end">Logout</a>
+                <a href="/edit_company" class="btn btn-outline-primary btn-sm float-end">Edit</a>
+            </nav>
+        </div>
+    </div>
+    <div class="container mb-4">
+        <div class="container mt-2">
+        <h4>Company Details</h4>
+            <p>ID:{{company.company_id}}</p>
+            <p>Name:{{company.company_name}}</p>
+            <p>HR Contact:{{company.hr_contact}}</p>
+            <p>Website:{{company.website}}</p>
+            <p>Status:{{company.approval_status}}</p>
+        </div>
+    </div>
+    
+    <div id="main">
+        <div id="canvas">
+            <div id="box">
+                <h3>Create Placement Drive</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Job Title</label>
+                        <input type="text" name="job_title" class="form-control" required><br>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control"><br>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Eligibility</label>
+                        <input type="text" name="eligibility" class="form-control"><br>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Deadline</label>
+                        <input type="text" name="deadline" class="form-control"><br>
+                    </div>
+                    <button class="btn btn-success">Create Drive</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="canvas">
+            <h3>Applications Recieved</h3>
+            <table class="table table-secondary table-striped">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Student ID</th>
+                        <th>CGPA</th>
+                        <th>Drive ID</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app, student in applications %}
+                    <tr>
+                        <td>{{student.student_name}}</td>
+                        <td>{{app.student_id}}</td>
+                        <td>{{student.cgpa}}</td>
+                        <td>{{app.drive_id}}</td>
+                        <td>{{app.status}}</td>
+                        <td>
+                            <a href="/update_status/{{app.student_app_id}}/shortlisted" class="btn btn-primary" >Shortlist</a>
+                            <a href="/update_status/{{app.student_app_id}}/selected" class="btn btn-success" >Select</a>
+                            <a href="/update_status/{{app.student_app_id}}/rejected" class="btn btn-danger">Reject</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>All Placement Drives</h3>
+            <table class="table table-primary table-striped">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>Eligibility</th>
+                        <th>Deadline</th>
+                        <th>Total Applications</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in Placements %}
+                    <tr>
+                        <td>{{d.job_title}}</td>
+                        <td>{{d.eligibility}}</td>
+                        <td>{{d.deadline}}</td>
+                        <td>{{d.applicant_count}}</td>
+                        <td>{{d.status}}</td>
+                        <td>
+                            <a href="/close_drive/{{d.drive_id}}" class="btn btn-warning btn-sm" >Close</a>
+                            <a href="/delete_drive/{{d.drive_id}}" class="btn btn-danger btn-sm" >Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>Pending Drives</h3>
+            <table class="table table-warning table-striped">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for d in pending_drives%}
+                    <tr>
+                        <td>{{d.job_title}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+
+            <h3>Approved Drives</h3>
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for d in approved_drives%}
+                    <tr>
+                        <td>{{d.job_title}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+    
+            <h3>Closed Drives</h3>
+            <table class="table table-danger table-striped">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for d in closed_drives%}
+                    <tr>
+                        <td>{{d.job_title}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>

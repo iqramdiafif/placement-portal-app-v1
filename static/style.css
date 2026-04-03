@@ -1,0 +1,23 @@
+*{margin: 0px;}
+#main, #canvas{
+    border: transparent;
+}
+#canvas{
+    width: 60%;
+    height: 700px;
+    margin: auto;
+}
+#box{
+    border: 1px solid black;
+    width: 400px;
+    margin: 100px auto;
+    border-radius: 22px;
+    padding: 30px;
+    background-color: beige;
+}
+#box h2{
+    text-align: center;
+}
+#box .text-center{
+    margin-top: 20px;
+}
