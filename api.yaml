@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Placement Portal API
+  version: 1.0.0
+  description: API documentation for Placement Portal Application
+
+paths:
+
+  /login:
+    post:
+      summary: Login user (student/company/admin)
+      responses:
+        '200':
+          description: Login successful
+
+  /register:
+    post:
+      summary: Register new user (student or company)
+      responses:
+        '200':
+          description: Registration successful
+
+  /company:
+    get:
+      summary: View company dashboard
+      responses:
+        '200':
+          description: Company dashboard displayed
+
+  /student:
+    get:
+      summary: View student dashboard
+      responses:
+        '200':
+          description: Student dashboard displayed
+
+  /admin:
+    get:
+      summary: View admin dashboard
+      responses:
+        '200':
+          description: Admin dashboard displayed
+
+  /apply/{id}:
+    get:
+      summary: Apply for a placement drive
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Application submitted
+
+  /approve/{id}:
+    get:
+      summary: Approve company registration
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+  /reject/{id}:
+    get:
+      summary: Reject company registration
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+  /blacklist_company/{id}:
+    get:
+      summary: Blacklist a company
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+  /approve_drive/{id}:
+    get:
+      summary: Approve placement drive
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+  /reject_drive/{id}:
+    get:
+      summary: Reject placement drive
+      parameters:
+        - name: id
+          in: path
+          required: true
+
+  /update_status/{id}/{status}:
+    get:
+      summary: Update application status
+      parameters:
+        - name: id
+          in: path
+          required: true
+        - name: status
+          in: path
+          required: true
