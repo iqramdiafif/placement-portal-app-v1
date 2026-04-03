@@ -362,18 +362,29 @@ def drive_detail_students(id):
     return render_template("drive_detail_students.html", drive=drive)
 
 #edit
-@app.route('/edit_student',methods=['GET','POST'])
+@app.route('/edit_student', methods=['GET', 'POST'])
 def edit_student():
-    student=User_student.query.get(session['user_id'])
+    student = User_student.query.get(session['user_id'])
 
-    if request.method=="POST":
-        student.student_name=request.form['student_name']
-        student.cgpa=request.form['cgpa']
-        student.resume=request.form['resume']
+    if request.method == 'POST':
+        student.student_name = request.form.get('student_name')
+
+        cgpa = request.form.get('cgpa')
+        if cgpa and cgpa.strip() not in ["", "None"]:
+            try:
+                student.cgpa = float(cgpa)
+            except:
+                student.cgpa = None
+        else:
+            student.cgpa = None
+
+        resume = request.form.get('resume')
+        student.resume = resume if resume and resume.strip() != "" else None
 
         db.session.commit()
         return redirect('/student')
-    return render_template("edit_student.html",student=student)
+
+    return render_template("edit_student.html", student=student)
 
 #--------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------
